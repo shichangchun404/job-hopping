@@ -4,11 +4,12 @@
 // 输出：[0,1]
 // 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
 
-let nums = [2,7,11,15]
-let target = 9
-function test(nums,target){
-  for(let i=0;i<nums.length;i++){
-    for(let j=0;j<nums.length;j++){
+// 暴力
+let nums = [3,2,66,777,77,33,4]
+let target = 6
+function test1(nums,target){
+  for(let i=0;i<nums.length-1;i++){
+    for(let j=i+1;j<nums.length;j++){
       if(nums[i]+nums[j]==target){
         return [i,j]
       }
@@ -16,5 +17,23 @@ function test(nums,target){
   }
 }
 
-let result = test(nums,target)
-console.log(result)
+//console.log(test1(nums,target))
+
+// 哈希法
+function test2(nums,target){
+  let map = {}
+  for(let i=0; i<nums.length;i++){
+    if(i==0){
+      map[nums[0]]=0
+    }else {
+      let cha = target - nums[i]
+      if(map[cha]==undefined){
+        map[nums[i]] = i
+      }else {
+        return [map[cha],i]
+      }
+    }
+  }
+}
+
+console.log(test2(nums,target))
