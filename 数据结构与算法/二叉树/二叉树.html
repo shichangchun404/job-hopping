@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据结构-二叉树</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //定义一个二叉树
+    function BinaryTree(){
+        //定义一个节点
+        var Node = function(key){
+            this.key = key;
+            this.left = null;
+            this.right = null;
+        };
+        //定义根节点
+        var root = null;
+        //定义一个插入函数
+        this.insert = function(key){
+            var newNode = new Node(key);
+            if(root === null){
+                root = newNode;
+            }else{
+                insertNode(root,newNode);
+            }
+        };
+        var insertNode = function(node,newNode){
+            if(newNode.key < node.key){
+                if(node.left === null){
+                    node.left = newNode;
+                }else{
+                    insertNode(node.left,newNode);
+                }
+            }else{
+                if(node.right === null){
+                    node.right = newNode;
+                }else{
+                    insertNode(node.right,newNode);
+                }
+            }
+        }
+    }
+    var nodes = [8,12,5,48,36,5,9,45,16,18];
+    var binaryTree = new BinaryTree();
+    nodes.forEach(item => {
+        binaryTree.insert(item);
+    })
+    console.log(binaryTree)
+</script>
+</html>

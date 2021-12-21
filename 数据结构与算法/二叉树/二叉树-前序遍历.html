@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前序遍历</title>
+</head>
+<body>
+    <h1>遍历顺序 中 左 右</h1>
+    <h1>实现目标 复制二叉树 O(n)次</h1>
+    <h1>插入复制二叉树 n*log(n)次</h1>
+</body>
+<script>
+        //定义一个二叉树
+        function BinaryTree(){
+           //定义一个节点
+           var Node = function(key){
+               this.key = key;
+               this.left = null;
+               this.right = null;
+           };
+           //定义根节点
+           var root = null;
+           //定义一个插入函数
+           this.insert = function(key){
+               var newNode = new Node(key);
+               if(root === null){
+                   root = newNode;
+               }else{
+                   insertNode(root,newNode);
+               }
+           };
+           var insertNode = function(node,newNode){
+               if(newNode.key < node.key){
+                   if(node.left === null){
+                       node.left = newNode;
+                   }else{
+                       insertNode(node.left,newNode);
+                   }
+               }else{
+                   if(node.right === null){
+                       node.right = newNode;
+                   }else{
+                       insertNode(node.right,newNode);
+                   }
+               }
+           };
+           //定义一个中序遍历的接口
+           this.inOrderTraverse = function(callback){
+               inOrderTraverseNode(root,callback);
+           };
+           var inOrderTraverseNode = function(node,callback){
+               if(node !==null){
+                   inOrderTraverseNode(node.left,callback);
+                   callback(node.key);
+                   inOrderTraverseNode(node.right,callback);
+               }
+           };
+           //定义一个前序遍历的接口
+           this.perOrderTraverse = function(callback){
+                perOrderTraverseNode(root,callback) 
+           }
+           var perOrderTraverseNode = function(node,callback){
+               if(node !== null){
+                    callback(node.key);
+                    perOrderTraverseNode(node.left,callback);
+                    perOrderTraverseNode(node.right,callback);
+               }
+           }
+       }
+       var nodes = [8,3,10,1,6,14,4,7,13];
+       var arrayOrder = [];
+       var binaryTree = new BinaryTree();
+       nodes.forEach(function(item) {
+           binaryTree.insert(item);
+       });
+       binaryTree.perOrderTraverse(callback);
+       function callback(key){
+           arrayOrder.push(key);
+       }
+       console.log(`前序遍历 the arrayOrder is ${arrayOrder}`);
+   </script>
+</html>
