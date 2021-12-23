@@ -1,4 +1,4 @@
-let s = 'ab'
+let s = 'abc'
 
 function test(s){
   let n = s.length
@@ -26,4 +26,24 @@ function test(s){
   
   return max
 }
-console.log(test(s))
+
+
+function test2(s){
+  let set = new Set()
+  let max = 0
+  let n = s.length
+  let rk = 0
+  for(let i=0;i<n;++i){
+    if(i!=0){
+      set.delete(s.charAt(i-1))
+    }
+    while(rk<n && !set.has(s.charAt(rk))){
+      set.add(s.charAt(rk))
+      rk++
+    }
+    max = Math.max(max,rk-i)
+  }
+  return max
+}
+
+console.log(test2(s))
