@@ -11,7 +11,18 @@ var obj = {
     test
 }
 obj.test() // 2
-============================
+============================ 
+### 箭头函数：函数定义的时候就已经确定 有人说「箭头函数里面的 this 指向箭头函数外面的 this」，这很傻，因为箭头函数内外 this 就是同一个东西，并不存在什么指向不指向。
+var a = 1
+var test = () => {
+    console.log(this.a)
+}
+var obj = {
+    a: 2,
+    test
+}
+obj.test()// 1
+============================================
 # this指向直接调用对象
 var a = 1
 function test () {
@@ -83,13 +94,3 @@ function fn (){ console.log(this) }
 var arr = [fn]
 arr[0]() // [f]
 =====================================
-### 箭头函数：函数定义的时候就已经确定 有人说「箭头函数里面的 this 指向箭头函数外面的 this」，这很傻，因为箭头函数内外 this 就是同一个东西，并不存在什么指向不指向。
-var a = 1
-var test = () => {
-    console.log(this.a)
-}
-var obj = {
-    a: 2,
-    test
-}
-obj.test()// 1
