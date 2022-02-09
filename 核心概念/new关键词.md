@@ -16,7 +16,7 @@
   function create(Con,...args){
       //1、创建一个空的对象
       let obj = {}; // let obj = Object.create({});
-      //2、将空对象的原型prototype指向构造函数的原型
+      //2、将空对象的__proto__指向构造函数的原型
       Object.setPrototypeOf(obj,Con.prototype); // obj.__proto__ = Con.prototype
       //3、改变构造函数的上下文（this）,并将剩余的参数传入
       let result = Con.apply(obj,args);
