@@ -29,7 +29,7 @@ for(var i=0;i<arr.length-1;i++){
     }
   }
 }
-console.log('arr = ',arr)
+// console.log('arr = ',arr)
 
 
 /*二分法排序*/
@@ -49,7 +49,22 @@ function to2fen(a){
   }
   return to2fen(l).concat(mid,to2fen(r))
 }
-var arr = [10,25,6,35,58,47,92,5];
-var asort = to2fen(arr);
-console.log(asort);
+var arr11 = [10,25,6,35,58,47,92,5];
+var asort = to2fen(arr11);
+console.log('二分法排序 ',asort);
 
+function BubbleSort(arr){
+  var i,j,temp;
+  for(i=0;i<arr.length-1;i++){
+    for(j=i+1;j<arr.length;j++){
+      if(arr[i]>arr[j]){
+          temp=arr[j];
+          arr[j]=arr[i];
+          arr[i]=temp;
+        }
+      }
+    }
+  return arr;
+}
+var bubbleSort = BubbleSort(arr11);
+console.log('冒泡排序 ',bubbleSort);
