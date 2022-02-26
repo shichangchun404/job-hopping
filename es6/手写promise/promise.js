@@ -101,3 +101,27 @@ Promise.prototype.catch = function(onCatch){
   // 6 交给then的第二个函数onReject处理 
   return this.then(undefined,onCatch)
 }
+/**
+ * 返回一个Promise
+ * 都成功 返回成功的结果列表 顺序一致
+ * 有一个失败 返回第一个失败
+ */
+// Promise.all([p1,p2,p3,...]) 
+Promise.all = function(arr){
+  return new Promise((resolve,reject)=>{
+    let result = []
+    arr.forEach((p,i)=>{
+      p.then(v=>{
+        // result.push(v) // 不能用push 异步存在数据顺序不一致
+        result[i]=v 
+        if(result.length===arr.length){
+          resolve(result)
+        }
+      },e=>{
+        reject(e)
+      })
+    })
+    
+  })
+  
+}
