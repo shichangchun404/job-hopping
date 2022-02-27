@@ -5,24 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>手写promise 测试</title>
-  <!-- <script src="./promise.js"></script> -->
+  <script src="./promise2.js"></script>
 </head>
 <body>
   
 </body>
 <script>
-  // let p = new Promise((resolve,reject)=>{
-  //   // 1 同步
-  //   // resolve('ok 1')
-  //   // reject('err 1')
-  //   throw 'throw Error' //会被then的第二个函数处理
-  //   // 2 异步
-  //   setTimeout(function(){
-  //     resolve('async resolve')
-  //     // reject('async reject')
-  //     // throw 'throw Error'
-  //   },1000)
-  // })
+  let p = new Promise((resolve,reject)=>{
+    // 1 同步
+    // resolve('ok 1')
+    // reject('err 1')
+    throw 'throw Error' //会被then的第二个函数处理
+    // 2 异步
+    setTimeout(function(){
+      resolve('async resolve')
+      // reject('async reject')
+      // throw 'throw Error'
+    },1000)
+  })
   // console.log('p ',p)
   // p.then(value=>{
   //   console.log(value)
@@ -70,33 +70,33 @@
   // })
 
   // 7 异常穿透 如果then中有reject处理且不发生异常 则catch不执行
-  // p.then()
-  // .then(v=>{
-  //   console.log('v ',v)
-  // },
-  // // e=>{
-  // //   console.log('e ', r.r.e)
-  // // }
-  // )
-  // .catch(err=>{
-  //   console.log('catch ',err)
-  // })
+  p.then()
+  .then(v=>{
+    console.log('v ',v)
+  },
+  // e=>{
+  //   console.log('e ', r.r.e)
+  // }
+  )
+  .catch(err=>{
+    console.log('catch ',err)
+  })
 
   // 7 Promise.all 
-  // let p1 = new Promise((resolve,reject)=>{
-  //   setTimeout(function(){
-  //     resolve(111)
-  //   },1000)
-  // })
-  // let p2 = new Promise((resolve,reject)=>{
-  //   resolve(222)
-  //   // reject('reject')
-  // })
-  // let p3 = new Promise((resolve,reject)=>{
-  //   resolve(333)
-  // })
-  // let arr = Promise.all([p1,p2,p3])
-  // console.log('arr ',arr)
+  let p1 = new Promise((resolve,reject)=>{
+    setTimeout(function(){
+      resolve(111)
+    },1000)
+  })
+  let p2 = new Promise((resolve,reject)=>{
+    resolve(222)
+    // reject('reject')
+  })
+  let p3 = new Promise((resolve,reject)=>{
+    resolve(333)
+  })
+  let arr = Promise.all([p1,p2,p3])
+  console.log('arr ',arr)
 
   
 
