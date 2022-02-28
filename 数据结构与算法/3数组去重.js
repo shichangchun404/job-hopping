@@ -8,11 +8,11 @@ let set2 = new Set(arr2)
 console.log(set2)
 
 var a3 = [1,2,3,4,5,6,3,1];
-var a4 = a3.filter(function(v,i,self){
-  console.log(v,i,self)  
-  return self.indexOf(v) == i;
+var a4 = a3.filter(function(item,i,arr){
+  console.log(item,i,arr)  
+  return arr.indexOf(item) == i;
 });
-console.log('a3 ',a4)
+console.log('a4 ',a4)
 
 // 找出重复的次数
 var arrString = 'abcdaabc';

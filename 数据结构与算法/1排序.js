@@ -1,5 +1,5 @@
 // 将A B合并排序
-let A = [0,7,9,66,77]
+let A = [0,2,7,9,66,77]
 let B = [1,3,5,23,37]
 
 for (let i=0;i<A.length;i++) {
@@ -35,9 +35,9 @@ for(var i=0;i<arr.length-1;i++){
 /*二分法排序*/
 function to2fen(a){
   if(a.length <= 1){
-      return a;
+      return a; // 返回类似[10] [25] []
   }
-  var mid = a.splice((Math.floor(a.length)/2),1);//Math.floor()向下取整 Math.ceil(0.1)=1向上取整
+  var mid = a.splice((Math.floor(a.length)/2),1);//Math.floor()向下取整 Math.ceil(0.1)=1向上取整 mid=[58] a=[10,25,6,35,47,92,5]
   var l = [];
   var r = [];
   for(var i = 0;i<a.length;i++){
@@ -47,7 +47,8 @@ function to2fen(a){
           r.push(a[i]);
       }
   }
-  return to2fen(l).concat(mid,to2fen(r))
+  // return to2fen(l).concat(mid,to2fen(r))
+  return [...to2fen(l),...mid,to2fen(r)]
 }
 var arr11 = [10,25,6,35,58,47,92,5];
 var asort = to2fen(arr11);
@@ -68,3 +69,4 @@ function BubbleSort(arr){
 }
 var bubbleSort = BubbleSort(arr11);
 console.log('冒泡排序 ',bubbleSort);
+

@@ -1,5 +1,6 @@
 let str = 'abc'
 let temp = []
+//期待 ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
 
 function fun (arr1,arr2) {
   console.log("arr1 arr2", arr1,arr2)
@@ -12,7 +13,7 @@ function fun (arr1,arr2) {
     if (copyA.length) {
       fun(copyA,copyB)
     } else {
-      return temp.push(copyB.join(''))
+      temp.push(copyB.join(''))
     }
   }
 }
