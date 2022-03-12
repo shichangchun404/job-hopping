@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>观察者模式</title>
+</head>
+<body>
+  
+</body>
+<script>
+  /**
+   * 观察者模式
+   * 2个构造函数【观察着】与【被观察者】
+   * 观察者
+   *  - 属性 名称为一标识
+   *  - 方法 观察着触发的事件
+   * 被观察者
+   *  - 属性 状态值
+   *  - 属性 观察者队列（数组）
+   *  - 方法 设置变更状态值 触发观察者队列中的观察者触发对应事件
+   *  - 方法 添加观察者
+   *  - 方法 删除观察者
+   * */
+
+  // 场景例子：学生观察书店是否开门 如果开门了 分别买各自的东西
+
+  // 观察者
+  class Observer{
+    constructor(name,fn){
+      if(typeof fn !='function' ){
+        fn = (()=>{})
+      }
+      this.name = name
+      this.fn = fn
+    }
+  }
+
+  // 被观察者
+  class Subject{
+    constructor(status){
+      this.status = status
+      this.observers = []
+    }
+    // 设置被观察者状态
+    setStatus(status){
+      this.status = status
+      this.observers.forEach(item => {
+        item.fn(status)
+      })
+    }
+    // 添加观察者
+    addObserver(ob){
+      this.observers = this.observers.filter((item) => {return item!=ob})
+      this.observers.push(ob)
+    }
+    // 删除观察者
+    deleteObserver(ob){
+      this.observers = this.observers.filter((item) => {return item!=ob})
+    }
+  }
+
+  let ob1 = new Observer('章三',(status)=>{console.log(status,'我要买一本书')})
+  let ob2 = new Observer('李四',(status)=>{console.log(status,'我要买一支笔')})
+  let ob3 = new Observer('王二',(status)=>{console.log(status,'我要买一橡皮')})
+  let ob4 = new Observer('王五',)
+
+  let bookstore = new Subject('未开门')
+
+  bookstore.addObserver(ob1)
+  bookstore.addObserver(ob2)
+  bookstore.addObserver(ob3)
+  bookstore.addObserver(ob4)
+  // bookstore.deleteObserver(ob3)
+  // bookstore.deleteObserver(ob4)
+  console.log('bookstore = ', bookstore)
+  bookstore.setStatus('书店开门了')
+
+</script>
+</html>
