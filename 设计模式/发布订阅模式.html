@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布订阅模式</title>
+</head>
+<body>
+  
+</body>
+<script>
+  /**
+   * 发布订阅者模式
+   * 一个构造函数 实现一个发布订阅器 实现事件的订阅与发布
+   * - 属性 事件消息集合{}
+   * - 方法 添加监听事件
+   * - 方法 删除事件监听
+   * - 方法 触发事件执行
+   * */
+
+  class Observer{
+    constructor(){
+      this.message = {}
+    }
+    // 订阅监听事件
+    on(name,fn){
+      if(!this.message[name]){
+        this.message[name] = []
+      }
+      this.message[name].push(fn)
+    }
+    // 取消监听事件
+    off(name,fn){
+      if (!fn) {
+        delete this.message[name]
+      } else {
+        this.message[name] = this.message[name].filter(item => item!=fn)
+      }
+    }
+    // 发布事件执行
+    emit(name){
+      if(this.message[name]){
+        this.message[name].forEach(fn => {
+          fn()
+        })
+      } else {
+        console.warn(`没有订阅事件-${name}`)
+      }
+    }
+  }
+
+  // 场景：买东西 让店员成为一个订阅器 订阅不同的人要购买的东西 等开门了 发送订阅事件
+  let ob = new Observer()
+
+  ob.on('章三',book1)
+  ob.on('章三',book2)
+  ob.on('章三',book3)
+
+  ob.on('李四',book1)
+  ob.on('李四',book2)
+  ob.on('李四',book3)
+  ob.on('李四',book4)
+
+  function book1(){console.log('买一本数学')}
+  function book2(){console.log('买一本英语')}
+  function book3(){console.log('买一本语文')}
+  function book4(){console.log('买一本物理')}
+
+  // 开门了 通知章三 李四
+  ob.off('李四',book1)
+  ob.emit('章三')
+  ob.emit('李四')
+
+</script>
+</html>
