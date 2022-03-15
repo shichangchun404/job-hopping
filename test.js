@@ -38,6 +38,8 @@ let r6 = arr1.reduce((total,item)=>{
 },100)
 console.log('reduce ',r6) // reduce  121
 
+
+
 console.log('原数组 ', arr1)
 
 // ========= 改版原数组的方法 ====================
@@ -63,4 +65,7 @@ console.log(rs4,arr2) // 8 [ '001', '002', 1, '1111', 4, 5, 6, 123 ]
 // shift 返回删除项目
 let rs5 = arr2.shift()
 console.log(rs5,arr2) // 001 [ '002', 1, '1111', 4, 5, 6, 123 ]
+
+let rs6 = arr2.reverse()
+console.log('reverse ',rs6) // reverse  [ 123, 6, 5, 4, '1111', 1, '002' ]
 
