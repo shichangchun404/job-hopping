@@ -44,14 +44,16 @@ function LList(){
 
   function remove(item){
     let prevNode = this.findPrev(item)
-    if (prevNode.next!=null) {
+    if(prevNode.next){
       prevNode.next = prevNode.next.next
+    }else{
+      prevNode.next = null
     }
   }
 
   function display(){
     let currentNode = this.head
-    while(currentNode.next!=null){
+    while(currentNode){
       console.log('element: ',currentNode.next.element)
       currentNode = currentNode.next
     }

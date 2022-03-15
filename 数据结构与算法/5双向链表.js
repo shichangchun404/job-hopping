@@ -32,6 +32,7 @@ function LList(){
   function insert(newElement,item){
     let newNode = new Node(newElement)
     let currentNode = this.find(item)
+    if(currentNode.next)currentNode.next.previous = newNode
     newNode.next = currentNode.next
     newNode.previous = currentNode
     currentNode.next = newNode

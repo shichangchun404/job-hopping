@@ -7,3 +7,7 @@
    return self.indexOf(v) === i;
  });
 console.log('结果 ',arr12)
+
+
+var arr3 = new Set(arr1) // Set { 1, 2, 3, 4, 5, 6 }
+console.log([...arr3])
