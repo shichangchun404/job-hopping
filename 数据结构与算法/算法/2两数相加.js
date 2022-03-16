@@ -61,3 +61,34 @@ var addTwoNumbers = function(l1, l2) {
 };
 
 console.log(addTwoNumbers(l1,l2))
+
+function add2(l1,l2){
+  let n1 = l1.reverse().join('')
+  let n2 = l2.reverse().join('')
+  let n3 = Number(n1)+Number(n2)
+  let strArr = String(n3).split('').reverse()
+  let numArr = strArr.map(item => Number(item))
+  return numArr
+
+}
+console.log(add([2,4,3],[5,6,4]))
+
+/**
+ * 应用Array.reduce()  Math.pow(10,2)
+ * @returns 
+ */
+ function add21(l1,l2){
+  function sum(l){
+    let totle = l.reduce(function(totle,current,index,arr){
+       totle += current*Math.pow(10,index)
+       return totle
+    },0)
+    console.log(totle)
+    return totle
+  }
+  let s = sum(l1)+sum(l2)
+  console.log(s)
+  return String(s).split('').reverse().map(item => Number(item))
+
+}
+console.log(add21([6,4,3],[5,6,6]))

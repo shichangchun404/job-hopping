@@ -1,40 +1,21 @@
-setTimeout(function(){
-  console.log('111')
-  new Promise((reslove,reject)=>{
-    console.log('aaa')
-    reslove()
-  }).then(function(){
-    console.log('2222')
-  })
-},0)
+// 输入：l1 = [2,4,3], l2 = [5,6,4]
+// 输出：[7,0,8]
+// 解释：342 + 465 = 807.
 
+let l1 = [2,4,3], l2 = [5,6,6]
 
-setTimeout(function(){
-  console.log('333')
-  new Promise((reslove,reject)=>{
-    console.log('bbb')
-    reslove()
-  }).then(function(){
-    console.log('4444')
-  })
-},0)
+function add21(l1,l2){
+  function sum(l){
+    let totle = l.reduce(function(totle,current,index,arr){
+       totle += current*Math.pow(10,index)
+       return totle
+    },0)
+    console.log(totle)
+    return totle
+  }
+  let s = sum(l1)+sum(l2)
+  console.log(s)
+  return String(s).split('').reverse().map(item => Number(item))
 
-new Promise((reslove,reject)=>{
-  console.log('ccc')
-  reslove()
-}).then(function(){
-  console.log('555')
-})
-
-console.log('666')
-
-// 执行结果
-// ccc
-// 666
-// 555
-// 111
-// aaa
-// 333
-// bbb
-// 2222
-// 4444
+}
+console.log(add21([6,4,3],[5,6,6]))
