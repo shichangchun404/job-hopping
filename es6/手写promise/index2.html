@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  /**
+   * async 会返回一个Promise对象 内部机制与Promise.then一致
+   * await 会返回promise成功的指
+   * await 必须在async函数内
+   */ 
+
+  async function main(){
+    // return 111
+    // throw 'err'
+    // await 100
+
+    let p = new Promise((resolve,reject)=>{
+      // resolve('ok')
+      reject('err')
+    })
+    
+    try {
+      let data = await p
+      console.log('data ',data)
+    } catch (error) {
+      console.log('error ',error)
+    }
+   
+  }
+  let m = main()
+  console.log('main ',m)
+</script>
+</html>

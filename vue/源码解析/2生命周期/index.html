@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2Vue生命周期</title>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+    <h1>{{str1}}</h1>
+    <p>
+      <span>{{str2}}</span>
+    </p>
+  </div>
+</body>
+<script>
+new Vue({
+  el: "#app",
+  data:{
+    msg: 'hi',
+    str1: 'wo shi h1',
+    str2: 'wo shi span'
+  },
+  beforeCreate(){
+    console.log('beforeCreate ',this, this.$el, this.$data)
+  },
+  created(){
+    console.log('created ', this.$el, this.$data)
+  },
+  beforeMount(){
+    console.log('beforeMount ', this.$el, this.$data)
+  },
+  mounted(){
+    console.log('mounted ', this.$el, this.$data)
+  }
+})
+</script>
+</html>
