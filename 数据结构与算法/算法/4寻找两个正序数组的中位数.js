@@ -41,10 +41,9 @@ var findMedianSortedArrays2 = function(nums1, nums2) {
       moveKey++
     } 
     resultArr.push(nums1[i])
-    while(moveKey<nums2.length&&nums2[moveKey]>nums1[i]&&i==nums1.length-1){
-      resultArr.push(nums2[moveKey])
-      moveKey++
-    } 
+  }
+  if(nums2[moveKey]>resultArr[resultArr.length-1]){
+    resultArr.push(...nums2.slice(moveKey))
   }
   console.log('resultArr ', resultArr)
   let midIndex = Math.floor(resultArr.length/2)
