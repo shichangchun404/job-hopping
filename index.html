@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .swiper {
+      width: 600px;
+      height: 300px;
+      overflow: hidden;
+    }  
+    .slider1{
+      background-color: antiquewhite;
+    }
+    .slider2{
+      background-color:aqua;
+    }
+    .slider3{
+      background-color:blueviolet;
+    }
+  </style>
+</head>
+<body>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slider1">slider1</div>
+      <div class="swiper-slide slider2">slider2</div>
+      <div class="swiper-slide slider3">slider3</div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+  </div>
+</body>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script> -->
+<script source="widget" src="//static-portal.jdcloud.com/jcloud/jc/2.2.0/js/swiper.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.min.css">
+<script>
+  var mySwiper = new Swiper('.swiper', {
+    autoplay: true,//可选选项，自动滑动
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  })
+
+</script>
+</html>
