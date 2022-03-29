@@ -10,17 +10,26 @@ function longestPalindromicSubstring(str){
   if(len<2){
     return str
   }
-  let max = 0
-  let maxStr = ''
-  for(let i =1;i<len;i++){
-    let leftIndex= i-1, rightIndx=i+1
-    while(-1<leftIndex&&rightIndx<len&&str[leftIndex]==str[rightIndx]){
-      leftIndex--
-      rightIndx++
+  let maxStr = str[0]
+  for(let i=0;i<len;i++){
+    let str1 = findStr(i-1,i+1)
+    let str2 = findStr(i,i+1)
+    let currMax = str1.length>=str2.length?str1:str2
+    maxStr = maxStr.length>=currMax.length?maxStr:currMax
+  }
+  console.log('maxStr ', maxStr)
+  return maxStr
+  function findStr(left,right){
+    let maxstr = ''
+    while(left>-1&&right<len&&str[left]==str[right]){
+      maxstr = str.slice(left,right+1)
+      left--
+      right++
     }
-    max = Math.max(max,rightIndx-leftIndex)
-    maxStr = s.slice(leftIndex,rightIndx)
+    return maxstr
   }
 }
 
-let str = 'abcded'
+let str = 'bb'
+
+longestPalindromicSubstring(str)
