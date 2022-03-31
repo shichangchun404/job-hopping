@@ -24,8 +24,8 @@ let r4 = arr1.some(function(item){
 })
 console.log('some ',r4) // some  true
 
-// slice 返回一个新数组 不改变原数组
-let r5 = arr1.slice(0,2) 
+// slice 返回一个新数组 不改变原数组 [startIndex, endIndex)
+let r5 = arr1.slice(0,2)  
 console.log('slice ',r5) // slice  [ 1, 2 ]
 
 /**
@@ -37,9 +37,6 @@ let r6 = arr1.reduce((total,item)=>{
   return total +=item
 },100)
 console.log('reduce ',r6) // reduce  121
-
-
-
 
 console.log('原数组 ', arr1) // 原数组  [ 6, 5, 4, 3, 2, 1 ]
 
