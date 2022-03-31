@@ -17,9 +17,9 @@
    * 3 singleTon函数核心代码
    * */
 
-  const Persion = (function(){ // 一个立即执行函数
+  const Person = (function(){ // 一个立即执行函数
     // 一个构造函数 单例对象
-    class Persion{
+    class Person{
       constructor(name,age){
         this.name = name
         this.age = age
@@ -33,14 +33,14 @@
     let instance = null
     // singleTon函数核心代码
     return function singleTon(...arg){
-      if(!instance) instance = new Persion(...arg)
+      if(!instance) instance = new Person(...arg)
       return instance
     }
 
   })()
 
-  let p1 = new Persion('章三',20) // 此处加不加new都可以 因为闭包函数最后返回了一个对象
-  let p2 = new Persion('李四',30)
+  let p1 = new Person('章三',20) // 此处加不加new都可以 因为闭包函数最后返回了一个对象
+  let p2 = new Person('李四',30)
 
   console.log(p1,p2)
 
