@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios解析</title>
+</head>
+<body>
+  <button id="btn">发送请求</button>
+  <button id="btn2">取消请求</button>
+</body>
+<script>
+  // 创建Axios
+  function Axios(config){
+    // 默认配置
+    this.default = config
+    // 拦截器
+    this.interceptors = {
+      request: new InterceptorManager(),
+      resopnse: new InterceptorManager()
+    }
+  }
+  // 拦截器构造函数
+  function InterceptorManager(){
+    this.handlers = []
+  }
+  // 设置拦截器use方法
+  InterceptorManager.prototype.use = function(fulfilled,rejected){
+    this.handlers.push({fulfilled,rejected})
+  }
+  // 设置请求方法 核心模块
+  Axios.prototype.request = function(config){
+    console.log('发送请求 request')
+    // 初始化一个成功的promise
+    let promise = Promise.resolve(config)
+    // 封装一个数组 实现【请求拦截器， 请求发送， 响应拦截器】的执行顺序
+    let chains = [dispatchRequest,undefined]
+    // 请求拦截器放入头部
+    this.interceptors.request.handlers.forEach(item => {
+      chains.unshift(item.fulfilled,item.rejected)
+    })
+    // 响应拦截器放入尾部
+    this.interceptors.resopnse.handlers.forEach(item => {
+      chains.push(item.fulfilled,item.rejected)
+    })
+    // 遍历chains 执行对应的函数
+    while(chains.length){
+      console.log('chains.length ',chains.length)
+      promise = promise.then(chains.shift(),chains.shift())
+    }
+    return promise
+  }
+  Axios.prototype.get = function(config){
+    console.log('发送请求 get',)
+    config.method = 'get'
+    return this.request(config)
+  }
+  Axios.prototype.post = function(config){
+    console.log('发送请求 post')
+    config.method = 'post'
+    return this.request(config)
+  }
+  // 发送请求
+  function dispatchRequest(config){
+    const adapter = getDefaultAdapter()
+    return adapter(config)
+  }
+  // 获取适配器 判断浏览器端还是node端 选择不同请求方式
+  function getDefaultAdapter(){
+    let adapter;
+    if (typeof XMLHttpRequest !== 'undefined') {
+      // 浏览器侧
+      adapter = xhrAdapter
+    } else {
+      // node侧使用 HTTP adapter 暂不实现
+      adapter = {};
+    }
+    return adapter;
+  }
+  // 客户端通过原生 XMLHttpRequest 封装请求
+  function xhrAdapter(config){
+    console.log('xhrAdapter 请求config ', config)
+    return new Promise((resolve,reject)=>{
+      const xhr = new XMLHttpRequest()
+      xhr.open(config.method.toUpperCase(),config.url)
+      xhr.send()
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState==4){
+          if(xhr.status>=200&&xhr.status<300){
+            resolve({
+              status: xhr.status,
+              statusText: xhr.statusText,
+              data: xhr.response
+            })
+          }else{
+            reject({
+              status: xhr.status,
+              statusText: xhr.statusText,
+              data: null
+            })
+          }
+        }
+      }
+      if(config.cancelToken){
+        config.cancelToken.promise.then(value=>{
+          console.log('取消请求')
+          xhr.abort()
+        })
+      }
+    })
+  }
+  
+  // axios实例创建函数
+  function createInstance(config){
+    // 实例化一个Axios对象 可以通过 context.get() context.post() 发送请求 但是不能 context()
+    let context = new Axios(config)
+    // instance 是个函数 其实Axios.prototype.request 
+    let instance = Axios.prototype.request.bind(context) // 此时可以使用 instance(config)发送请求 但是不能instance.get() instance.post()
+    // 将Axios.prototype上的方法 放到instance函数上 使得instance.get() instance.post()可以调用
+    Object.keys(Axios.prototype).forEach(key =>{
+      instance[key] = Axios.prototype[key].bind(context)
+    })
+    // 将context的default interceptors属性 放到 instance 函数对象上
+    Object.keys(context).forEach(key =>{
+      instance[key] = context[key]
+    })
+    return instance
+  }
+  // 取消请求
+  Axios.prototype.CancelToken = function(exector){
+    let resolvePromise
+    this.promise = new Promise((resolve,reject)=>{
+      resolvePromise = resolve
+    })
+    exector(function(){
+      console.log(1111)
+      resolvePromise()
+    })
+  }
+  
+  
+  // ============== axios 使用方式 ===============
+  let axios = createInstance({})
+  console.dir(axios)
+
+  const btn = document.getElementById('btn')
+  btn.addEventListener('click', send)
+
+  const btn2 = document.getElementById('btn2')
+  btn2.addEventListener('click',function(){
+    cancel()
+  })
+  let cancelToken = new axios.CancelToken(function(c){
+    cancel = c
+  })
+  function send(){
+    axios.interceptors.request.use((config)=>{
+      console.log('request 拦截器 1')
+      return config
+    },()=>{
+
+    })
+    axios.interceptors.request.use((config)=>{
+      console.log('request 拦截器 2')
+      return config
+    },()=>{
+
+    })
+    axios.interceptors.resopnse.use((res)=>{
+      console.log('resopnse 拦截器 1')
+      res.message1 = 'message1'
+      return res
+    },(err)=>{
+      throw err
+    })
+    axios.interceptors.resopnse.use((res)=>{
+      console.log('resopnse 拦截器 2')
+      res.message2 = 'message2'
+      return res
+    },(err)=>{
+      throw err
+    })
+    // 1当函数使用 axios()
+    // axios({
+    //   method:'GET',
+    //   url: '/'
+    // }).then(resolve=>{
+    //   console.log('请求成功 ', resolve)
+    // },reject=>{
+    //   console.log('请求失败 ', reject)
+    // })
+    // 2 当对象使用 axios.get() axios.post()
+    
+    axios.get({
+      method:'get', 
+      url:'http://localhost:53000/user',
+      cancelToken: cancelToken
+    }).then(resolve=>{
+      console.log('请求成功 ', resolve)
+    },reject=>{
+      console.log('请求失败 ', reject)
+    })
+    
+
+  }
+
+</script>
+</html>
