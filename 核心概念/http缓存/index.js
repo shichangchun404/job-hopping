@@ -8,7 +8,13 @@ app.use('*',(req,res,next)=>{
   // console.log('请求进来了 url= ',req.url)
   next()
 })
-// app.use(express.static(__dirname + '/static',{maxAge:40000}))
+
+app.get('/',(req,res,next)=>{
+  let data = fs.readFileSync(path.resolve(__dirname,'./index.html'))
+  res.setHeader('Content-Type','text/html')
+  res.setHeader('Cache-Control','no-store')
+  res.send(data.toString())
+})
 
 app.get('/1.jpg',(req,res)=>{
   console.log('/1.jpg ')
@@ -42,9 +48,19 @@ app.get('/2.jpg',(req,res)=>{
 })
 app.get('/3.jpg',(req,res)=>{
   console.log('/3.jpg ')
-  let data = fs.readFileSync(path.resolve(__dirname,'./static/3.jpg'))
+  let stat = fs.statSync(path.resolve(__dirname,'./static/3.jpg'))
+  let mtime = stat.mtime
   res.setHeader('Content-Type','image/jpeg')
-  res.setHeader('Cache-Control','no-store')
+  res.setHeader('Cache-Control','no-cache')
+  res.setHeader('Last-Modified',mtime)
+  // console.log(req.headers)
+  if(req.headers['if-modified-since']&&mtime==req.headers['if-modified-since'].toString()){
+    console.log('文件修改时间一致 返回304')
+    res.statusCode = 304
+    res.send()
+    return
+  }
+  let data = fs.readFileSync(path.resolve(__dirname,'./static/3.jpg'))
   res.send(data)
 })
 app.listen(8848,()=>{
