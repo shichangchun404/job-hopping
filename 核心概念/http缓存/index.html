@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>http 缓存</title>
   <style>
+    .imgbox{
+      display: flex;
+    }
     img{
       width: 300px;
     }
@@ -13,7 +16,7 @@
 </head>
 <body>
   <P>调试阶段，注意控制台的Disable cache是否关闭，否则混存不生效</P>
-  <div>
+  <div class="imgbox">
     <div>
       <img src="http://localhost:8848/1.jpg">
     </div>
@@ -22,6 +25,9 @@
     </div>
     <div>
       <img src="http://localhost:8848/3.jpg">
+    </div>
+    <div>
+      <img src="http://localhost:8848/4.jpg">
     </div>
   </div>
 </body>
