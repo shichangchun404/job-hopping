@@ -24,6 +24,7 @@ let r4 = arr1.some(function(item){
 })
 console.log('some ',r4) // some  true
 
+
 // slice 返回一个新数组 不改变原数组 [startIndex, endIndex)
 let r5 = arr1.slice(0,2)  
 console.log('slice ',r5) // slice  [ 1, 2 ]
@@ -39,6 +40,10 @@ let r6 = arr1.reduce((total,item)=>{
 console.log('reduce ',r6) // reduce  121
 
 console.log('原数组 ', arr1) // 原数组  [ 6, 5, 4, 3, 2, 1 ]
+
+arr1.find(item => { // find() 方法返回通过测试（函数内判断）的数组的第一个元素的值。
+  return item >1
+})
 
 // ========= 改版原数组的方法 ====================
 console.log('========= 改版原数组的方法 ====================')

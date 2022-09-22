@@ -106,3 +106,18 @@ console.log('666')
 // 333-60
 // bbb-60
 // 4444-60
+
+
+// var fn = async ()=>{
+//   console.log(1)
+//   return 10
+// };
+// (async function(){
+//   let re = await fn()
+//   console.log(2,re)
+// })();
+// console.log(3)
+
+// VM53214:2 1
+// VM53214:9 3
+// VM53214:7 2 10
