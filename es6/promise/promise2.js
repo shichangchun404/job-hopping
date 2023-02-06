@@ -1,3 +1,4 @@
+// 使用类的写法
 class Promise {
   constructor(execute){
     this.PromiseState = 'pending'

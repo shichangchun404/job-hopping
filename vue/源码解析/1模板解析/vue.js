@@ -12,7 +12,7 @@ class Vue{
       if(item.nodeType===1){ // node节点 递归调用compile
         this.compile(item)
       } else if(item.nodeType===3){ // 文本节点
-        // 正则pipei{{}}
+        // 正则配置{{}}
         let reg = /\{\{(.*?)\}\}/g
         item.textContent = item.textContent.replace(reg,(match,vmKey)=>{
           // console.log(match,vmKey)
