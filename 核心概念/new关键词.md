@@ -10,6 +10,7 @@
 # 怎么实现
 ```bash 
   /*
+    如 const c = new Con(), 通过create函数展示其内部实现
     create函数要接受不定量的参数，第一个参数是构造函数（也就是new操作符的目标函数），其余参数被构造函数使用。
     new Create() 是一种js语法糖。我们可以用函数调用的方式模拟实现
   */
@@ -17,11 +18,11 @@
       //1、创建一个空的对象
       let obj = {}; // let obj = Object.create({});
       //2、将空对象的__proto__指向构造函数的原型
-      Object.setPrototypeOf(obj,Con.prototype); // obj.__proto__ = Con.prototype
+      Object.setPrototypeOf(obj, Con.prototype); // obj.__proto__ = Con.prototype
       //3、改变构造函数的上下文（this）,并将剩余的参数传入
-      let result = Con.apply(obj,args);
+      let result = Con.apply(obj, args);
       //4、在构造函数有返回值的情况进行判断
-      return result instanceof Object?result:obj; 
+      return result instanceof Object? result : obj; 
   }
 ```
 在new的时候，会对构造函数的返回值做一些判断：
