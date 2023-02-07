@@ -21,7 +21,7 @@ Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回该请�
 
 （5）max-age=xxx (单位秒)：缓存内容将在xxx秒后失效， 表示强制缓存xxx秒。
 
-### 协商缓存
+### 协商缓存 （Cache-Control：no-cache）
 协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程，主要有以下两种情况：
 1 协商缓存生效，返回304
 2 协商缓存失败，返回200和请求结果
@@ -30,11 +30,11 @@ Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回该请�
 Last-Modified / If-Modified-Since和 Etag / If-None-Match，
 其中Etag / If-None-Match的优先级比Last-Modified / If-Modified-Since高。
 
-### Last-Modified / If-Modified-Since
+#### Last-Modified / If-Modified-Since
 Last-Modified是服务器响应请求时，返回该资源文件在服务器最后被修改的时间 （如果文件内容没有实际变化，只是时间变化也会导致缓存失效）
 If-Modified-Since则是客户端再次发起该请求时，携带上次请求返回的Last-Modified值，通过此字段值告诉服务器该资源上次请求返回的最后被修改时间。服务器收到该请求，发现请求头含有If-Modified-Since字段，则会根据If-Modified-Since的字段值与该资源在服务器的最后被修改时间做对比，若服务器的资源最后被修改时间大于If-Modified-Since的字段值，则重新返回资源，状态码为200；否则则返回304，代表资源无更新，可继续使用缓存文件.
 
-### Etag / If-None-Match
+#### Etag / If-None-Match
 Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成).（如果文件内容没有更新，只是时间发生变化 混存不会失效，故比Last-Modified / If-Modified-Since更精确，更优先）
 If-None-Match是客户端再次发起该请求时，携带上次请求返回的唯一标识Etag值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。服务器收到该请求后，发现该请求头中含有If-None-Match，则会根据If-None-Match的字段值与该资源在服务器的Etag值做对比，一致则返回304，代表资源无更新，继续使用缓存文件；不一致则重新返回资源文件，状态码为200.
 

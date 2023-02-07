@@ -14,6 +14,7 @@ app.use('*',(req,res,next)=>{
 //   lastModified: false,
 // }))
 
+//index.html 'Cache-Control','no-store' 不缓存
 app.get('/',(req,res,next)=>{
   let data = fs.readFileSync(path.resolve(__dirname,'./index.html'))
   res.setHeader('Content-Type','text/html')
@@ -21,6 +22,7 @@ app.get('/',(req,res,next)=>{
   res.send(data.toString())
 })
 
+// 1.jpg 'Cache-Control','max-age=30' 强制缓存30s
 app.get('/1.jpg',(req,res)=>{
   console.log('/1.jpg ')
   let data = fs.readFileSync(path.resolve(__dirname,'./static/1.jpg'))
@@ -28,6 +30,8 @@ app.get('/1.jpg',(req,res)=>{
   res.setHeader('Cache-Control','max-age=30')
   res.send(data)
 })
+
+// 2.jpg 'Cache-Control','no-cache' 协商缓存 采用Etag标志
 app.get('/2.jpg',(req,res)=>{
   console.log('/2.jpg ')
   let data = fs.readFileSync(path.resolve(__dirname,'./static/2.jpg'))
@@ -47,6 +51,8 @@ app.get('/2.jpg',(req,res)=>{
   }
   
 })
+
+// 3.jpg 'Cache-Control','no-cache' 协商缓存 采用Last-Modified标志
 app.get('/3.jpg',(req,res)=>{
   console.log('/3.jpg ')
   let stat = fs.statSync(path.resolve(__dirname,'./static/3.jpg'))
