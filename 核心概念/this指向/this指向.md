@@ -77,7 +77,10 @@ var obj = {
     test
 }
 var testCopy = obj.test
-testCopy.call(obj)
+testCopy.call(obj) // 1
+
+var tt = testCopy.bind(obj)
+tt() // 1
 
 func(p1, p2) 等价于
 func.call(undefined, p1, p2)

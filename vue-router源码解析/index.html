@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-router 源码解析</title>
+  <script src="./src/vue.js"></script>
+  <script src="./src/vue-router/index.js"></script>
+
+</head>
+
+<body>
+
+  <div id="app">
+
+    <p>
+    <h1>hash 模式</h1>
+    <!--使用 router-link 组件进行导航 -->
+    <!--通过传递 `to` 来指定链接 -->
+    <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
+    <div>--------- 以下是router-link标签形式 ------- </div>
+    <router-link to="/home">Go to Home</router-link>
+    <router-link to="/about">Go to About</router-link>
+    <div>--------- 以下是a标签形式 ------- </div>
+    <a href="/home" id="home">Home</a>
+    <a href="/home">Go to Home</a>
+    </p>
+    <p>
+    <h1>history 模式</h1>
+    <button onclick="jump('/home')">Go to Home</button>
+    <button onclick="jump('/about')">Go to About</button>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <router-view></router-view>
+  </div>
+</body>
+<script>
+  // 1. 定义路由组件.
+  // 也可以从其他文件导入
+  const Home = { template: '<div>Home</div>' }
+  const About = { template: '<div>About</div>' }
+
+  // 2. 定义一些路由
+  // 每个路由都需要映射到一个组件。
+  // 我们后面再讨论嵌套路由。
+  const routes = [
+    { path: '/home', component: Home },
+    { path: '/about', component: About },
+  ]
+
+  // 3. 创建路由实例并传递 `routes` 配置
+  // 你可以在这里输入更多的配置，但我们在这里
+  // 暂时保持简单
+  const router = new VueRouter({
+    mode: 'history',
+    routes, // `routes: routes` 的缩写
+  })
+
+  // 5. 创建并挂载根实例
+  const app = new Vue({
+    name: 'root',
+    el: '#app',
+    router
+  })
+  // 现在，应用已经启动了！
+
+  // history模式 需要通过按钮实践跳转 a标签直接跳转会404（需要服务端配置）
+  // 为了在强制刷新后能恢复到之前的路由，不然刷新一下就404要么就跑回首页了），还要在后端将所有路由请求的url重定向到index
+  function jump(url) {
+    // pushState不会触发页面页面刷新，只是地址栏会发生变化
+    // 注意：调用history.pushState()方法不会触发 popstate 事件，popstate只会在浏览器某些行为下触发, 
+    // 比如点击后退、前进按钮（或者在JS中调用 history.back()、history.forward()、history.go() 方法）。
+    // 用户会点击页面上的导航按钮（router-link组件），通过内部js逻辑来切换路由。点击router-link组件不会发请求。 
+    // a阻止默认事件，通过router.push/router.replace实现url更新 .然后调用subscription.dispatch通知对应的Route组件
+
+    history.pushState({ page: url }, 'title', url)
+  }
+
+  const home = document.getElementById('home')
+  home.onclick = function (e) {
+    console.log(e)
+    e.preventDefault()
+  }
+</script>
+
+</html>

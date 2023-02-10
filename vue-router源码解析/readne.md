@@ -1,0 +1,6 @@
+1. 修改hash然后回车不会发请求，hash只用于页面定位，也不会发到后台。HashHistory就是利用页面定位实现的不刷新跳转（传统的a标签默认get请求，target为当前tab），本质就是一个浏览器内置的发布订阅（只是能在url上用hash体现出来），改变hash会广播hashchange事件。你在JSX里使用Link组件，它本质是继承了原生a标签（接口继承），在onClick handler中将超链接默认事件阻止，避免了页面重定向。
+
+2. 利用HTML5/History就是BrowserHistory，依靠pushState保存历史记录，监听浏览器在历史记录上前进后退即popstate事件。
+history模式不是依靠url改变来切换路由的，因为url改变不会触发任何事件（除了hash），
+所以需要依赖内部实现的transitionTo，在点击router-link标签时，阻止默认事件，然后调用pushState。
+

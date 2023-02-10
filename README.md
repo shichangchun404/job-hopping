@@ -4,6 +4,7 @@
 * [Y] 当输入URL时，整个过程是什么样的 
 * [Y] 原型链 
 * [Y] http缓存 
+* [Y] http常用请求头
 * [Y] new关键词
 
 * input 中如何监听值的变化，事实上 onchange 无法作用
