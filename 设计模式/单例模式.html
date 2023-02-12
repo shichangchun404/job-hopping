@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>单例模式</title>
-</head>
-<body>
-  
-</body>
-<script>
-  /**
-   * 单例模式
-   * 1 一个构造函数 一个单例对象变量
-   * 2 一个立即执行函数 返回一个singleTon函数 (闭包)
-   * 3 singleTon函数核心代码
-   * */
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>单例模式</title>
+  </head>
+  <body></body>
+  <script>
+    /**
+     * 单例模式
+     * 1 一个构造函数 一个单例对象变量
+     * 2 一个立即执行函数 返回一个singleTon函数 (闭包)
+     * 3 singleTon函数核心代码
+     * */
 
-  const Person = (function(){ // 一个立即执行函数
-    // 一个构造函数 单例对象
-    class Person{
-      constructor(name,age){
-        this.name = name
-        this.age = age
+    const Person = (function () {
+      // 一个立即执行函数
+      // 一个构造函数 单例对象
+      class Person {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+        say() {
+          console.log("hi , my name is ", this.name);
+        }
       }
-      say(){
-        console.log('hi , my name is ',this.name)
+
+      // 一个单例对象变量
+      let instance = null;
+      // singleTon函数核心代码
+      return function singleTon(...arg) {
+        if (!instance) instance = new Person(...arg);
+        return instance;
+      };
+    })();
+
+    let p1 = new Person("章三", 20); // 此处加不加new都可以 因为闭包函数最后返回了一个对象
+    let p2 = new Person("李四", 30);
+
+    console.log(p1, p2);
+
+    /**
+     * 通过静态方法 实现一个单例模式
+     */
+    class Cache {
+      constructor(n, m) {
+        this.n = 100;
+      }
+      static getInstance() {
+        if (!this.cache) {
+          this.cache = new Cache();
+        }
+        return this.cache;
       }
     }
 
-    // 一个单例对象变量
-    let instance = null
-    // singleTon函数核心代码
-    return function singleTon(...arg){
-      if(!instance) instance = new Person(...arg)
-      return instance
-    }
-
-  })()
-
-  let p1 = new Person('章三',20) // 此处加不加new都可以 因为闭包函数最后返回了一个对象
-  let p2 = new Person('李四',30)
-
-  console.log(p1,p2)
-
-</script>
+    let c1 = Cache.getInstance();
+    console.log(c1);
+    c1.n = 101;
+    let c2 = Cache.getInstance();
+    console.log(c2.n); //101
+  </script>
 </html>
