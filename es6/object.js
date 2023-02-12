@@ -59,7 +59,8 @@ console.log(Object.getOwnPropertyNames(obj)); // [ 'a', 'b', 'c' ]
  */
 
 /**
- * Object.entries 返回一个数组 [[key,value],[key,value]]
+ * Object.entries 返回一个数组 [[key,value],[key,value]], 不包含继承的属性
  */
 var obj = { a: 1, b: 2 };
+obj.__proto__ = { c: 3 };
 Object.entries(obj); // [[a,1],[b,2]]
