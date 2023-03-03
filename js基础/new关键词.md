@@ -22,7 +22,6 @@
       //2、将空对象的__proto__指向构造函数的原型
       Object.setPrototypeOf(obj, Func.prototype); // obj.__proto__ = Func.prototype
       //3、z执行构造函数器函数，并改变构造函数的上下文（this指向）,将剩余的参数传入
-      let result = Func.apply(obj, args);
       //4、在构造函数有返回值的情况进行判断
       return result instanceof Object? result : obj;
   }

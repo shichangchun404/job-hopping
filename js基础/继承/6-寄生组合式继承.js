@@ -1,4 +1,4 @@
-// 前6种种最优解
+// 寄生组合式继承 前6种种最优解
 
 function clone(parent, child) {
   child.prototype = Object.create(parent.prototype)

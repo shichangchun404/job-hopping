@@ -18,7 +18,7 @@ if (true) {
 // ========================================================
 var c = 1
 function c(c) {
-  console(c)
+  console.log(c)
   var c = 3
 }
 console.log(c)
